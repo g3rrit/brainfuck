@@ -97,10 +97,10 @@ do_set (State mi v mt) = do
 do_print :: State -- current state
          -> IO () -- resulting action
 
-do_print (State mi v mt) = print $ (chr v)
+do_print (State mi v mt) = putChar $ (chr v)
 
 -- ------------------ ENTRY_POINT ------------------- --
 main = do
-  putStrLn "Brainfuck hs"
+  putStrLn "----- BRAINFUCK HASKELL -----"
   next (State mem 0 mem) [] []
     where mem = 0 : mem
