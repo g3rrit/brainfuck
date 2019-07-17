@@ -129,7 +129,8 @@ exec(45) :- % -
 
 exec(46) :- % .
         mem(Y),
-        put(Y).
+        put(Y),
+        flush_output.
 
 exec(44) :- % ,
         get(C),
