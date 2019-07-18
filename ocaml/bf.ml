@@ -1,3 +1,4 @@
+(* Module that hold a lazy doubly linked list *)
 module type TypeF =
   sig
     type t
@@ -37,16 +38,24 @@ module Tape (Q: TypeF) = struct
 end
 
 
-module Memory = Tape (struct
-                    type t = int
-                    let next = fun _ -> 0
-                    let prev = fun _ -> 0 end)
+(* MEMORY MODULE *)
+module Memory =
+  Tape (struct
+      type t = int
+      let next = fun _ -> 0
+      let prev = fun _ -> 0
+    end)
 
 
-module InTape = Tape (struct
-                    type t = char
-                    let next = fun _ -> input_char stdin
-                    let prev = fun _ -> Printf.printf "no matching left bracket\n"; exit 0 end)
+(* TAPE MODULE *)
+module InTape =
+  Tape (struct
+      type t = char
+      let next = fun _ ->
+        try input_char stdin
+        with End_of_file -> Printf.printf "----- EOF -----\n"; exit 0
+      let prev = fun _ -> Printf.printf "no matching left bracket\n"; exit 0
+    end)
 
 
 let rec seek_right n =
@@ -65,14 +74,14 @@ let rec seek_left n =
 let rec next (c : char) : unit =
   let v = Memory.get () in
   (match c with
-    | '>' -> (Memory.next (); ())
-    | '<' -> (Memory.prev (); ())
+    | '>' -> ignore (Memory.next ())
+    | '<' -> ignore (Memory.prev ())
     | '+' -> Memory.set (v + 1)
     | '-' -> Memory.set (v - 1)
-    | '.' -> Printf.printf "val: %c\n" (Char.chr v)
+    | '.' -> Printf.printf "%c%!" (Char.chr v)
     | ',' -> Memory.set (Char.code (input_char stdin))
-    | '[' -> seek_right 1
-    | ']' -> seek_left 1
+    | '[' -> if v == 0 then seek_right 0 else ()
+    | ']' -> if v != 0 then seek_left 0 else ()
     | _ -> ());
   next (InTape.next ())
 
