@@ -101,6 +101,5 @@ do_print (State mi v mt) = putChar $ (chr v)
 
 -- ------------------ ENTRY_POINT ------------------- --
 main = do
-  putStrLn "----- BRAINFUCK HASKELL -----"
   next (State mem 0 mem) [] []
     where mem = 0 : mem

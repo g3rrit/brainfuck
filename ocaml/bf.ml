@@ -86,5 +86,4 @@ let rec next (c : char) : unit =
   next (InTape.next ())
 
 let () =
-  Printf.printf "----- BRAINFUCK OCAML -----\n";
   next (InTape.get ())

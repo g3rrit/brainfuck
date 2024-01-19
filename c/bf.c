@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define MEMORY_SIZE 8192
-#define TAPE_SIZE 8192
+#define MEMORY_SIZE 262144
+#define TAPE_SIZE 262144
 
 int memory[MEMORY_SIZE] = { 0 };
 int *ptr = memory + (MEMORY_SIZE / 2);
@@ -38,8 +38,6 @@ void seek_right(void) {
 
 
 int main() {
-  printf("----- BRAINFUCK C -----\n");
-
   for(;;) {
     char c = next();
 

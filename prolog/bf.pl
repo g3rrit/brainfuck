@@ -156,6 +156,5 @@ next :-
 
 % -------------------- ENTRY_POINT --------------------
 :-
-        format("----- BRAINFUCK PROLOG -----\n"),
         next.
         halt.
